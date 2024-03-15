@@ -39,8 +39,14 @@
 	function logCurrentGraphState() {
 		const currentGraphMap = get(graphStore);
 		const graph = currentGraphMap.get('G-1');
+
 		if (graph) {
 			console.log('Current Graph State:', graph);
+			const currentParams = graph.nodes.get('N-3');
+			currentParams.parameters.subscribe((params) => {
+				console.log(params);
+			});
+			//console.log('Current params:', currentParams?.parameters);
 		} else {
 			console.log('No current graph found');
 		}
@@ -51,7 +57,12 @@
 	<Svelvet minimap title="test" controls>
 		<!-- buttons on lower level node -->
 		<Connector />
-		<Node bgColor="red" inputs={4} position={{ x: 600, y: 200 }}>
+		<Node
+			bgColor="red"
+			inputs={4}
+			position={{ x: 600, y: 200 }}
+			parameters={{ dupa: 2, dupa2: 1.5 }}
+		>
 			<button on:click={() => widthCount++} />
 			{#each { length: widthCount } as item}
 				<div>Height</div>
@@ -69,7 +80,7 @@
 			<button on:click={logCurrentGraphState}>Log Current Graph State</button>
 		</Node>
 		<!-- text field -->
-		<Node inputs={5} position={{ x: 600, y: 600 }}>
+		<Node inputs={5} position={{ x: 600, y: 600 }} parameters={{ dupa: 1, dupa2: 1.5 }}>
 			<TextField placeholder="name" />
 		</Node>
 		<!-- blue node -->

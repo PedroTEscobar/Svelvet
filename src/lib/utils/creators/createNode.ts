@@ -16,7 +16,9 @@ export function createNode(userNode: NodeConfig): Node {
 		position,
 		selectionColor,
 		borderWidth,
-		edge
+		edge,
+		// biggus pipeus
+		parameters
 	} = userNode;
 	const { bgColor, borderColor, rotation, borderRadius, connections, textColor, locked, group } =
 		userNode;
@@ -74,7 +76,9 @@ export function createNode(userNode: NodeConfig): Node {
 		borderWidth: writable(borderWidth),
 		selectionColor: writable(selectionColor || null),
 		textColor: writable(textColor || null),
-		connections: writable(connections)
+		connections: writable(connections),
+		// biggus pipeus
+		parameters: writable(parameters)
 	};
 
 	return newNode;

@@ -93,6 +93,7 @@
 	 */
 	export let dynamic = false;
 	export let title = '';
+	export let parameters = {};
 
 	//External stores
 	const nodes = graph.nodes;
@@ -139,7 +140,9 @@
 			zIndex,
 			direction,
 			locked,
-			rotation
+			rotation,
+			// biggus pipeus
+			parameters
 		};
 		if (connections.length) config.connections = connections;
 		if (borderWidth) config.borderWidth = borderWidth;
@@ -260,6 +263,10 @@
 	}
 	$: if (node) {
 		node.outputs.set(outputs);
+	}
+	// biggus pipeus
+	$: if (node) {
+		node.parameters.set(parameters);
 	}
 </script>
 

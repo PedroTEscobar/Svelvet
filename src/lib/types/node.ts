@@ -41,6 +41,8 @@ export interface Node {
 	borderColor: Writable<CSSColorString | null>;
 	selectionColor: Writable<CSSColorString | null>;
 	textColor: Writable<CSSColorString | null>;
+	// biggus datus
+	parameters: Writable<{ [key: string]: number }>;
 }
 
 // This defines an interface for the node object
@@ -76,6 +78,8 @@ export interface NodeConfig {
 	textColor?: CSSColorString;
 	connections?: Connections;
 	edge?: ComponentType;
+	// biggus pipeus
+	parameters: { [key: string]: number };
 }
 
 export type UserDimension = number | CSSDimensionString;

@@ -8,6 +8,9 @@
 
 	import type { CSSColorString, Node as SvelvetNode } from '$lib/types';
 	import Node from '../Node/Node.svelte';
+	//biggus pipeus
+	import { onDestroy } from 'svelte';
+	import { updateTranslation } from '$lib/utils';
 
 	export let editing: SvelvetNode;
 	const graph = getContext<Graph>('graph');
@@ -66,6 +69,22 @@
 			node.resizingHeight.set(true);
 		}
 	}
+	// biggus pipeus
+	const nodeId = editing.id;
+	const node = graph.nodes.get(nodeId);
+	let params: { [key: string]: number };
+	const unsubscribe = node?.parameters.subscribe((parameters) => {
+		params = parameters;
+	});
+	onDestroy(unsubscribe);
+
+	function handleSubmit(e) {
+		const formData = new FormData(e.target);
+		const formDataObj = {};
+		formData.forEach((value, key) => (formDataObj[key] = parseFloat(value)));
+		node?.parameters.set(formDataObj);
+		params = formDataObj;
+	}
 </script>
 
 <Node zIndex={Infinity} position={editorPosition} bgColor="white" id="editor">
@@ -77,9 +96,19 @@
 			>X</button
 		>
 		<!-- <Slider parameterStore={editing.dimensions.width} max={1000} label="" /> -->
-		<TextField placeholder={'Node Label'} />
+		<!-- <TextField placeholder={'Node Label'} /> -->
 		<button on:click={deleteNode}>Delete Node</button>
-		<button on:click={resizeNode}>Resize Node</button>
+		<!-- <button on:click={resizeNode}>Resize Node</button> -->
+		<!--biggus pippeus-->
+		{#if Object.keys(params).length !== 0}
+			<form action="#" on:submit|preventDefault={handleSubmit}>
+				{#each Object.entries(params) as [name, value]}
+					<label for={name} style="font-size:12px;">{name}</label>
+					<input type="text" id={name} {name} {value} />
+				{/each}
+				<input type="submit" value="Submit" />
+			</form>
+		{/if}
 	</div>
 </Node>
 
@@ -112,9 +141,9 @@
 	}
 
 	.editor {
-		background-color: rgb(108, 233, 35);
-		width: 250px;
-		height: 200px;
+		background-color: rgb(34, 38, 32);
+		width: 220px;
+		height: 250px;
 		justify-content: space-evenly;
 	}
 </style>
